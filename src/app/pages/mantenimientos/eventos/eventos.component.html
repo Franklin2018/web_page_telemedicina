@@ -1,0 +1,101 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Buscar evento..." #txtTermino (keyup)="buscar( txtTermino.value )" />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">Eventos ({{ eventos.length }})</h4>
+                        <h6 class="card-subtitle">
+                            Eventos registrados en mi aplicación
+                        </h6>
+                    </div>
+
+                    <div class="col">
+                        <div class="text-right">
+                            <a class="btn btn-primary" routerLink="/dashboard/evento/nuevo">
+                                <i class="fa fa-hospital-o"></i> Crear evento
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w100">Foto</th>
+                                <th>Nombre</th>
+                                <th>Consignado</th>
+                                <th>Direccion</th>
+                                <th class="w100 text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let evento of eventos">
+                                <td class="text-center">
+                                    <img [src]="evento.img | imagen:['eventos','img',evento._id, evento.estudio]" [alt]="evento.nombre" class="w100 cursor" (click)="abrirModal(evento)">
+                                </td>
+                                <td>
+                                    {{ evento.nombre }}
+                                </td>
+                                <td>
+                                    {{ evento.consignado }}
+                                </td>
+                                <td>
+                                    {{ evento.direccion }}
+                                </td>
+
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard','evento', evento._id]" data-toggle="tooltip" data-original-title="Editar">
+                                        <i class="fa fa-pencil text-inverse m-r-10"></i>
+                                    </a>
+
+                                    <a class="cursor" data-toggle="tooltip" data-original-title="Borrar" (click)="borrarEvento( evento )">
+                                        <i class="fa fa-close text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--
+                <button class="btn btn-secondary">Anteriores</button>
+                &nbsp;
+                <button class="btn btn-secondary">Siguientes</button> -->
+
+            </div>
+        </div>
+    </div>
+</div>
