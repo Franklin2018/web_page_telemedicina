@@ -1,21 +1,26 @@
-
-.fast{
+.fast {
     -webkit-animation-duration: 0.3s;
     animation-duration: 0.3s;
-    -webkit-animation-fill-mode:both;
-    animation-fill-mode:both
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
 }
 
-#themecolors .selector, .cursor {
+#themecolors .selector,
+.cursor {
     cursor: pointer;
 }
-
 
 #google-btn {
     align-items: center;
     display: flex;
     justify-content: center;
     text-align: center;
+}
+
+.mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-edit {
+    background-color: rgb(57, 139, 247) !important;
 }
 
 .img-avatar {

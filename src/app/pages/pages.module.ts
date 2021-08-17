@@ -18,15 +18,8 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
-// import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
-// // import { MedicoComponent } from './mantenimientos/medicos/medico.component';
-// import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
-import { FotografosComponent } from './mantenimientos/fotografos/fotografos.component';
-import { EstudiosComponent } from './mantenimientos/estudios/estudios.component';
-import { EstudioComponent } from './mantenimientos/estudios/estudio.component';
-import { EventosComponent } from './mantenimientos/eventos/eventos.component';
-import { EventoComponent } from './mantenimientos/eventos/evento.component';
+
 
 
 
@@ -44,14 +37,12 @@ import { EventoComponent } from './mantenimientos/eventos/evento.component';
     PerfilComponent,
     UsuariosComponent,
     // HospitalesComponent,
-    // MedicosComponent,
-    // MedicoComponent,
     BusquedaComponent,
-    FotografosComponent,
-    EstudiosComponent,
-    EstudioComponent,
-    EventosComponent,
-    EventoComponent
+    // FotografosComponent,
+    // EstudiosComponent,
+    // EstudioComponent,
+    // EventosComponent,
+    // EventoComponent
   ],
   exports: [
     DashboardComponent,

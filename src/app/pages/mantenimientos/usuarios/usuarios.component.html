@@ -49,9 +49,8 @@
                         <select class="form-control w100" [(ngModel)]="role" (change)=" cargarUsuarios() ">
                           <option value="todos">Todos</option>
                           <option value="ADMIN_ROLE">Admin</option>
-                          <option value="OFICIAL_ROLE">Oficial</option>
-                          <option value="CIVIL_ROLE">Civil</option>
-                          <option value="USER_ROLE">User</option>
+                          <option value="PACIENTE_ROLE">Paciente</option>
+                          <option value="MEDICO_ROLE">Medico</option>
                         </select>
 
                     </div>
@@ -105,28 +104,20 @@
                                 <td>
                                     <select *ngIf="usuario.role == 'ADMIN_ROLE'" class="form-control btn btn-danger text-white" [(ngModel)]="usuario.role" (change)="cambiarRole( usuario )">
                                         <option value="ADMIN_ROLE">Admin</option>
-                                        <option value="OFICIAL_ROLE">Oficial</option>
-                                        <option value="CIVIL_ROLE">Civil</option>
-                                        <option value="USER_ROLE">User</option>
+                                        <option value="PACIENTE_ROLE">Paciente</option>
+                                        <option value="MEDICO_ROLE">Medico</option>
                                     </select>
-                                    <select *ngIf="usuario.role == 'OFICIAL_ROLE'" class="form-control btn btn-warning text-white" [(ngModel)]="usuario.role" (change)="cambiarRole( usuario )">
-                                        <option value="ADMIN_ROLE">Admin</option>
-                                        <option value="OFICIAL_ROLE">Oficial</option>
-                                        <option value="CIVIL_ROLE">Civil</option>
-                                        <option value="USER_ROLE">User</option>
+                                    <select *ngIf="usuario.role == 'PACIENTE_ROLE'" class="form-control btn btn-warning text-white" [(ngModel)]="usuario.role" (change)="cambiarRole( usuario )">
+                                      <option value="ADMIN_ROLE">Admin</option>
+                                      <option value="PACIENTE_ROLE">Paciente</option>
+                                      <option value="MEDICO_ROLE">Medico</option>
                                     </select>
-                                    <select *ngIf="usuario.role == 'CIVIL_ROLE'" class="form-control btn btn-info text-white" [(ngModel)]="usuario.role" (change)="cambiarRole( usuario )">
-                                        <option value="ADMIN_ROLE">Admin</option>
-                                        <option value="OFICIAL_ROLE">Oficial</option>
-                                        <option value="CIVIL_ROLE">Civil</option>
-                                        <option value="USER_ROLE">User</option>
+                                    <select *ngIf="usuario.role == 'MEDICO_ROLE'" class="form-control btn btn-info text-white" [(ngModel)]="usuario.role" (change)="cambiarRole( usuario )">
+                                      <option value="ADMIN_ROLE">Admin</option>
+                                      <option value="PACIENTE_ROLE">Paciente</option>
+                                      <option value="MEDICO_ROLE">Medico</option>
                                     </select>
-                                    <select *ngIf="usuario.role == 'USER_ROLE'" class="form-control btn btn-info text-white" [(ngModel)]="usuario.role" (change)="cambiarRole( usuario )">
-                                        <option value="ADMIN_ROLE">Admin</option>
-                                        <option value="OFICIAL_ROLE">Oficial</option>
-                                        <option value="CIVIL_ROLE">Civil</option>
-                                        <option value="USER_ROLE">User</option>
-                                    </select>
+
                                 </td>
                                 <!-- <td>
                                     <span *ngIf="usuario.google" class="label label-danger">Google</span>
