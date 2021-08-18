@@ -151,11 +151,13 @@
                                 </td>
 
                                 <td class="text-nowrap text-center">
-                                    <a data-toggle="tooltip" data-original-title="Borrar" class="cursor" (click)="eliminarUsuario(usuario)">
+                                    <a class="btn " data-toggle="tooltip" data-original-title="Borrar" (click)="eliminarUsuario(usuario)">
                                         <i class="fa fa-close text-danger"></i>
                                     </a>
+                                    <a class="btn btn-light" [routerLink]="['/dashboard','usuario', usuario.uid]" data-toggle="tooltip" data-original-title="ver">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                 </td>
-
                             </tr>
 
                         </tbody>

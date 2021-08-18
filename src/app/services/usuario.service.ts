@@ -13,6 +13,8 @@ import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
 
 import { Usuario } from '../models/usuario.model';
 import { query } from '@angular/animations';
+import { Persona } from '../models/persona.model';
+import { Medico } from '../models/medico.model';
 
 const base_url = environment.base_url;
 
@@ -117,9 +119,10 @@ export class UsuarioService {
 
     return this.http.post(`${ base_url }/usuarios`, formData )
               .pipe(
-                tap( (resp: any) => {
-                  this.guardarLocalStorage( resp.token, resp.menu );
-                })
+                map((resp:{ok:boolean,usuario:Usuario, persona:Persona})=>resp)
+                // tap( (resp: any) => {
+                //   // this.guardarLocalStorage( resp.token, resp.menu );
+                // })
               )
 
   }
@@ -155,6 +158,13 @@ export class UsuarioService {
                   })
                 );
 
+  }
+
+  cargarUsuario(id:String){
+    const url = `${base_url}/usuarios/usuario/${id}`;
+    return this.http.get(url,this.headers).pipe(
+      map((resp:{ok:boolean,usuario:Usuario, persona:Persona, data:Medico})=>resp)
+    )
   }
 
 

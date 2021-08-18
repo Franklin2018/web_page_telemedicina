@@ -22,6 +22,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { RegisterSelectionComponent } from './register-selection/register-selection.component';
 import { RegisterAdminComponent } from './register-admin/register-admin.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { RegisterAdminComponent } from './register-admin/register-admin.componen
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
 
     NgxDropzoneModule,
 

@@ -10,10 +10,10 @@ export class Medico {
       public nosocomio?: string,
       public direccionNosocomio?: string,
       public calificacion?: string,
-      public carnetIdentidad?: string,
       public descripcion?: string,
       public cv?: string,
       public credencialMedico?: string,
+      public especilidad?: string,
       public persona?: Persona,
   ) {}
 

@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2'
 
 import { UsuarioService } from '../../services/usuario.service';
 import { EstudioService } from '../../services/estudio.service';
 import { MedicoService } from '../../services/medico.service';
 import { FileUploadService } from '../../services/file-upload.service';
+import { Medico } from 'src/app/models/medico.model';
+import { Especialidad } from '../../models/especialidad.model';
+import { EspecialidadService } from '../../services/especialidad.service';
+import { startWith, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 interface Genero {
   value: string;
@@ -19,8 +24,12 @@ interface Genero {
 })
 export class RegisterMedicoComponent {
 
+  public especialidades : Especialidad [] = [];
+  myControl = new FormControl();
+  filteredOptions: Observable<Especialidad[]>;
+
+
   public formSubmitted = false;
-  public formComplete = false;
   isLinear = true;
 
   files: File[] = [];
@@ -57,10 +66,10 @@ export class RegisterMedicoComponent {
     titulo: ['', Validators.required ],
     nosocomio: '',
     direccionNosocomio: ['', Validators.required ],
-    carnetIdentidad: ['', Validators.required ],
     descripcion: ['', Validators.required ],
     cv:'',
     credencialMedico: ['', Validators.required ],
+    especialidad: ['',Validators.required],
     persona:"",
   });
 
@@ -68,15 +77,31 @@ export class RegisterMedicoComponent {
                private usuarioService: UsuarioService,
                private MedicoService: MedicoService,
                private fileUploadService :FileUploadService,
+               private especialidadService:EspecialidadService,
                private router: Router ) { }
 
+ngOnInit(): void {
+
+  this.cargarEspecialidades();
+
+
+  this.filteredOptions = this.registerFormMedico.get('especialidad').valueChanges.pipe(
+            startWith(''),
+            map((value:string)=>this._filter(value))
+          )
+
+}
+
+
+private _filter(value: string): Especialidad[] {
+  const filterValue = value.toLowerCase();
+  return this.especialidades.filter((especialidad:Especialidad) => especialidad.nombre.toLowerCase().includes(filterValue));
+}
 
 onSelect(event) {
-  console.log(event);
   this.files.push(...event.addedFiles);
 }
 onRemove(event) {
-  console.log(event);
   this.files.splice(this.files.indexOf(event), 1);
 }
 
@@ -84,14 +109,13 @@ onRemove(event) {
   test(cpt){
     this.formSubmitted = cpt;
 
-    console.log(this.formComplete);
-    console.log(cpt);
   }
 
   crearUsuario(cpt) {
     this.formSubmitted = cpt;
 
-    if ( this.registerFormUsuario.invalid || this.registerFormPersona.invalid || this.registerFormMedico.invalid) {
+    if ( this.registerFormUsuario.invalid || this.registerFormPersona.invalid || this.registerFormMedico.invalid || !(this.files.length>0)){
+      console.log('no entro');
       return;
     }
     const mergedObject = {
@@ -99,28 +123,24 @@ onRemove(event) {
       ...this.registerFormPersona.value
     };
 
-    console.log(mergedObject);
-
     // Realizar el posteo
     this.usuarioService.crearUsuario( mergedObject )
         .subscribe( resp => {
           const { nombre } = this.registerFormUsuario.value;
           const persona = resp.persona._id;
-          const usuario = resp.usuario.uid;
           this.registerFormMedico.patchValue({persona:persona});
 
-          this.MedicoService.crearMedico(this.registerFormMedico.value).subscribe((resp:any)=>{
-            Swal.fire('Creado', `${ nombre } creado correctamente`, 'success');
-      //       this.fileUploadService
-      // .subirArchivo( this.files[0], 'medicos',usuario  )
-      // .then( img => {
-      //   Swal.fire('Guardado', 'Imagen de usuario actualizada', 'success');
+          this.MedicoService.crearMedico(this.registerFormMedico.value).subscribe((medico:Medico)=>{
+            this.fileUploadService.subirArchivo(this.files[0],medico._id).then(img=>{
 
-      // }).catch( err => {
-      //   console.log(err);
-      //   Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-      // })
-            // this.router.navigateByUrl(`/dashboard/estudio/${ resp.estudio._id }`)
+              Swal.fire('Creado', `${ nombre } creado correctamente`, 'success');
+
+            }).catch(err =>{
+
+              Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+
+            });
+
           });
 
 
@@ -135,17 +155,24 @@ onRemove(event) {
 
   }
 
-
+  cargarEspecialidades(){
+    this.especialidadService.cargarEspecialidades().subscribe((especialidades: Especialidad[])=>{
+      this.especialidades = especialidades;
+    });
+  }
 
   campoNoValido( formGroup: FormGroup,campo: string ): boolean {
-    // if(this.registerFormUsuario.get(campo).value ==="")
-    // return false;
+
     if ( formGroup.get(campo).invalid && this.formSubmitted ) {
       return true;
     } else {
       return false;
     }
 
+  }
+
+  campoFileNoValido(fls:File[]){
+    return (!(fls.length>0) && this.formSubmitted);
   }
 
   contrasenasNoValidas() {
@@ -178,5 +205,6 @@ onRemove(event) {
 
     }
   }
-
 }
+
+

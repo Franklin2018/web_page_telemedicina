@@ -50,7 +50,8 @@ export class MedicoService {
   crearMedico( formData: RegisterFormMedico ) {
 
     const url = `${ base_url }/medicos`;
-    return this.http.post( url, formData, this.headers );
+    return this.http.post( url, formData, this.headers )
+    .pipe(map((resp:{ok:boolean,medico:Medico})=>resp.medico));
   }
 
   actualizarMedico( medico: Medico  ) {

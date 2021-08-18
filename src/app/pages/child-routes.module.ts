@@ -16,6 +16,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { AdminGuard } from '../guards/admin.guard';
+import { UsuarioComponent } from './mantenimientos/usuarios/usuario.component';
 
 
 const childRoutes: Routes = [
@@ -32,6 +33,7 @@ const childRoutes: Routes = [
 
 
   // Rutas de Admin
+  { path: 'usuario/:id', canActivate: [ AdminGuard ], component: UsuarioComponent, data: { titulo: 'Perfil publico de usuario' }},
   { path: 'usuarios', canActivate: [ AdminGuard ], component: UsuariosComponent, data: { titulo: 'Matenimiento de Usuarios' }},
 ]
 

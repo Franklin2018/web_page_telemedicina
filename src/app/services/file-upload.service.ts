@@ -10,103 +10,63 @@ export class FileUploadService {
 
   constructor() { }
 
+  // async actualizarFotos(
+  //   archivo: Array<File>,
+  //   tipo: 'usuarios'|'eventos',
+  //   dir: 'img'|'galeria',
+  //   id: string
+  // ) {
 
-  async actualizarFotos(
-    archivo: Array<File>,
-    tipo: 'usuarios'|'eventos',
-    dir: 'img'|'galeria',
-    id: string
-  ) {
+  //   try {
 
-    try {
+  //     const url = `${ base_url }/upload/${ tipo }/${dir}/${ id }`;
+  //     const formData = new FormData();
+  //     for (let i = 0; i < archivo.length; i++) {
+  //       formData.append('imagen',archivo[i]);
+  //     }
 
-      const url = `${ base_url }/upload/${ tipo }/${dir}/${ id }`;
-      const formData = new FormData();
-      for (let i = 0; i < archivo.length; i++) {
-        formData.append('imagen',archivo[i]);
-      }
+  //     const resp = await fetch( url, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'x-token': localStorage.getItem('token') || ''
+  //       },
+  //       body: formData
+  //     });
 
-      const resp = await fetch( url, {
-        method: 'PUT',
-        headers: {
-          'x-token': localStorage.getItem('token') || ''
-        },
-        body: formData
-      });
+  //     const data = await resp.json();
 
-      const data = await resp.json();
+  //     if ( data.ok ) {
+  //       console.log(data.msg);
+  //       console.log(data.nombreArchivos);
+  //       return data.nombreArchivos;
+  //     } else {
+  //       console.log('salio mal');
+  //       console.log(data.msg);
+  //       return false;
+  //     }
 
-      if ( data.ok ) {
-        console.log(data.msg);
-        console.log(data.nombreArchivos);
-        return data.nombreArchivos;
-      } else {
-        console.log('salio mal');
-        console.log(data.msg);
-        return false;
-      }
+  //   } catch (error) {
+  //     console.log(error);
+  //     console.log('error front');
+  //     return false;
+  //   }
 
-    } catch (error) {
-      console.log(error);
-      console.log('error front');
-      return false;
-    }
-
-  }
+  // }
 
   async subirArchivo(
     archivo: File,
-    tipo:"medicos",
-    id:string
-    ){
-      try {
-
-        const url = `${ base_url }/upload/${ tipo }/${ id }`;
-        const formData = new FormData();
-        formData.append('archivo', archivo);
-
-        const resp = await fetch( url, {
-          method: 'PUT',
-          headers: {
-            'x-token': localStorage.getItem('token') || ''
-          },
-          body: formData
-        });
-
-        const data = await resp.json();
-
-        if ( data.ok ) {
-          console.log(data.nombreArchivo);
-
-          return data.nombreArchivo;
-        } else {
-          console.log(data.msg);
-          return false;
-        }
-
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    }
-
-  async actualizarFoto(
-    archivo: File,
-    tipo: 'usuarios'|'medicos'|'hospitales'|'fotografos'|'estudios'|'eventos',
     id: string
   ) {
 
-
     try {
-
-      const url = `${ base_url }/upload/${ tipo }/${ id }`;
+      const url = `${ base_url }/upload/file/${ id }`;
       const formData = new FormData();
-      formData.append('imagen', archivo);
+      formData.append('file', archivo);
 
       const resp = await fetch( url, {
         method: 'PUT',
         headers: {
-          'x-token': localStorage.getItem('token') || ''
+          'x-token': localStorage.getItem('token') || '',
         },
         body: formData
       });
@@ -114,7 +74,6 @@ export class FileUploadService {
       const data = await resp.json();
 
       if ( data.ok ) {
-        console.log(data.nombreArchivo);
 
         return data.nombreArchivo;
       } else {
@@ -129,7 +88,42 @@ export class FileUploadService {
 
   }
 
+    async actualizarFoto(
+      archivo: File,
+      id: string
+    ) {
 
 
+      try {
+        const url = `${ base_url }/upload/img/${ id }`;
+        const formData = new FormData();
+        formData.append('imagen', archivo);
 
-}
+        const resp = await fetch( url, {
+          method: 'PUT',
+          headers: {
+            'x-token': localStorage.getItem('token') || '',
+          },
+          body: formData
+        });
+
+
+        console.log('asdadsasddddddddddddddddddddddddddddddddddddddddddddd');
+
+        const data = await resp.json();
+
+        if ( data.ok ) {
+
+          return data.nombreArchivo;
+        } else {
+          console.log(data.msg);
+          return false;
+        }
+
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+
+    }
+  }

@@ -3,16 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { Fotografo } from '../models/fotografo.model';
+import { Especialidad } from '../models/especialidad.model';
 
 const base_url = environment.base_url;
-const s3_url = environment.s3_url;
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class FotografoService {
+export class EspecialidadService {
 
 
   constructor( private http: HttpClient ) { }
@@ -30,43 +29,43 @@ export class FotografoService {
   }
 
 
-  cargarFotografos() {
+  cargarEspecialidades() {
 
-    const url = `${ base_url }/fotografos`;
+    const url = `${ base_url }/especialidad/getespecialidades`;
     return this.http.get( url, this.headers )
               .pipe(
-                map( (resp: {ok: boolean, fotografos: Fotografo[] }) => resp.fotografos )
+                map( (resp: {ok: boolean, especialidades: Especialidad[] }) => resp.especialidades )
               );
   }
 
-  crearFotografo( data: any ) {
+  crearEspecialidad( data: any ) {
 
-    const url = `${ base_url }/fotografos`;
+    const url = `${ base_url }/especialidad`;
     return this.http.post( url, data, this.headers );
   }
 
-  actualizarFotografo( _id: string, nombre: string  ) {
+  actualizarEspecialidad( _id: string, nombre: string  ) {
 
-    const url = `${ base_url }/fotografos/${ _id }`;
+    const url = `${ base_url }/especialidad/${ _id }`;
     return this.http.put( url, { nombre }, this.headers );
   }
 
-  borrarFotografo( _id: string ) {
+  borrarEspecialidad( _id: string ) {
 
-    const url = `${ base_url }/fotografos/${ _id }`;
+    const url = `${ base_url }/especialidad/${ _id }`;
     return this.http.delete( url, this.headers );
   }
 
-//   imgUrl(fotografos: Fotografo[])
+//   imgUrl(especialidad: Especialidad[])
 //   {
-//     fotografos.forEach(fotografo => {
+//     especialidad.forEach(fotografo => {
 //       const id = fotografo._id;
 //       const img = fotografo.img;
 //       fotografo.img = this._imagenUrl(id,img);
 //     });
-//     console.log(fotografos);
+//     console.log(especialidad);
 
-//     return fotografos;
+//     return especialidad;
 //   }
 
 //   _imagenUrl(id:string ,img: string) {
@@ -76,7 +75,7 @@ export class FotografoService {
 //     } else if ( img.includes('https') ) {
 //         return img;
 //     } else if ( img ) {
-//         return `${ s3_url }/uploads/fotografos/${id}/img/${ img }`;
+//         return `${ s3_url }/uploads/especialidad/${id}/img/${ img }`;
 //     } else {
 //         return `${ base_url }/uploads/no-image`;
 //     }

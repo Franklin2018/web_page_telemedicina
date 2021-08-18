@@ -10,7 +10,7 @@ const s3_url = environment.s3_url;
 export class ModalImagenService {
 
   private _ocultarModal: boolean = true;
-  public tipo: 'usuarios'|'medicos'|'hospitales'|'fotografos'|'estudios'|'eventos';
+  public tipo: 'usuarios';
   public id: string;
   public img: string;
 
@@ -21,7 +21,7 @@ export class ModalImagenService {
   }
 
   abrirModal(
-      tipo: 'usuarios'|'medicos'|'hospitales'|'fotografos'|'estudios'|'eventos',
+      tipo: 'usuarios',
       id: string,
       img: string,
       idPadre?: any
@@ -32,20 +32,12 @@ export class ModalImagenService {
     // localhost:3000/api/upload/medicos/no-img
 
 
-      if(this.tipo=='eventos'){
-        if ( !img ) {
-          this.img =  `${ base_url }/upload/${tipo}/no-image`;
-        } else if ( img ) {
-          this.img =  `${ s3_url }/uploads/estudios/${idPadre}/${ tipo }/${id}/img/${ img }`;
-        }else{
-          this.img =  `${ base_url }/upload/${tipo}/no-image`;
-        }
-      } else if(!img){
+     if(!img){
         this.img = `${ base_url }/upload/${ tipo }/no-img`;
       }else  if ( img.includes('https') ) {
         this.img = img;
       }else{
-        this.img = `${s3_url}/uploads/${tipo}/${id}/img/${img}`;
+        this.img = `${ base_url }/upload/${ tipo }/no-img`;
       }
 
   }

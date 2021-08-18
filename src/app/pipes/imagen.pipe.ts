@@ -1,5 +1,6 @@
 import { LowerCasePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 
 const base_url = environment.base_url;
@@ -10,31 +11,31 @@ const s3_url = environment.s3_url;
 })
 export class ImagenPipe implements PipeTransform {
 
-  transform( img: string, arg: ["usuarios"|"medicos"|"hospitales"|"fotografos"|"estudios"|"eventos","img"|"galeria"|"qr",string, any?]): string {
+  transform( img: string, arg: "usuarios"): string {
 
-  var tipo = arg[0];
-  var dir = arg[1];
-  var id = arg[2];
+  var tipo = arg;
+    console.log(img);
 
-
-    if(tipo=='eventos'){
-      let idEstudio = arg[3];
-      if ( !img ) {
-        return `${ base_url }/upload/${tipo}/no-image`;
-      } else if ( img ) {
-          return `${ s3_url }/uploads/estudios/${idEstudio}/${ tipo }/${id}/${dir}/${ img }`;
-      }
-    }else{
       if ( !img ) {
             return `${ base_url }/upload/${tipo}/no-image`;
         } else if ( img.includes('https') ) {
             return img;
-        } else if ( img ) {
-            return `${ s3_url }/uploads/${ tipo }/${id}/${dir}/${ img }`;
-        } else {
+        }  else {
             return  `${ base_url }/upload/${tipo}/no-image`;
         }
-    }
+      }
+
+}
+
+@Pipe({
+  name: 'safe'
+})
+export class SafePipe implements PipeTransform {
+
+  constructor(private sanitizer: DomSanitizer) { }
+
+  transform(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

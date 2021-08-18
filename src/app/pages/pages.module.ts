@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 
 import { PipesModule } from '../pipes/pipes.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -18,6 +19,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
+import { UsuarioComponent } from './mantenimientos/usuarios/usuario.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 
 
@@ -36,7 +38,9 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
     RxjsComponent,
     PerfilComponent,
     UsuariosComponent,
-    // HospitalesComponent,
+    UsuarioComponent,
+
+
     BusquedaComponent,
     // FotografosComponent,
     // EstudiosComponent,
@@ -58,7 +62,8 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
     SharedModule,
     RouterModule,
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    PdfViewerModule
   ]
 })
 export class PagesModule { }
