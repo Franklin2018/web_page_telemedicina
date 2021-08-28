@@ -103,7 +103,8 @@ const customInitFunctions = () => {
         // ==============================================================
         // Perfact scrollbar
         // ==============================================================
-        $('.scroll-sidebar, .right-side-panel, .message-center, .right-sidebar').perfectScrollbar();
+        // $('.scroll-sidebar, .right-side-panel, .message-center, .right-sidebar').perfectScrollbar();
+        $('.scroll-sidebar, .right-side-panel, .message-center').perfectScrollbar();
 
         // ==============================================================
         // Resize all elements
@@ -140,7 +141,6 @@ const customInitFunctions = () => {
         });
 
     });
-
 }
 
 customInitFunctions();

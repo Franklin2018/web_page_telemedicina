@@ -1,4 +1,16 @@
-<div class="row">
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
 
     <div class="col-md-6">
         <div class="card">
@@ -41,7 +53,7 @@
                 <h6 class="card-subtitle">Imagen del usuario</h6>
 
                 <div class="text-center">
-                    <img *ngIf="!imgTemp" [src]="usuario.imagenUrl" class="img-avatar">
+                    <img *ngIf="!imgTemp" [src]="usuario.img | imagen:'usuarios'" class="img-avatar">
                     <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
                 </div>
 
@@ -58,5 +70,60 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6" *ngIf="usuario.role=='MEDICO_ROLE'">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Horarios de atencion</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
 
+                <form class="form p-t-20" [formGroup]="horarioForm" (submit)="actualizarHorario()">
+
+                    <div class="row">
+                        <div class="form-group p-10">
+                            <label for="InputDias">Dias de atencion</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-calendar"></i></div>
+
+                                <input type="text" class="form-control" disabled=true id="InputDias" placeholder="Nombre del usuario" value="L,M,Mi,J,V,S,D" formControlName="dias">
+                            </div>
+                        </div>
+                        <div class="form-group p-10">
+                            <label for="InputTiempo">Tiempo por Cita medica</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-calendar"></i></div>
+                                <select id="InputTiempo" formControlName="tiempo">
+                                  <option value="15">15 min</option>
+                                  <option value="30">30 min</option>
+                                  <option value="45">45 min</option>
+                                  <option value="60" selected>1 hora</option>
+                                </select>
+                                <!-- <input type="number" class="form-control" id="InputTiempo" placeholder="1 Hora" formControlName="tiempo"> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputHoraInicio">Inicio de atencio</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-time"></i></div>
+                            <input type="time" class="form-control" id="InputHoraInicio" placeholder="Horarioi Inicio" formControlName="horaInicio">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="horacierre">Cierre de atencio</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-time"></i></div>
+                            <input type="time" class="form-control" id="horacierre" placeholder="Horario Cierre" formControlName="horaCierre">
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light m-r-10" [disabled]="horarioForm.invalid">
+                      <i class="fa fa-save"></i>
+                      Guardar cambios
+                  </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>

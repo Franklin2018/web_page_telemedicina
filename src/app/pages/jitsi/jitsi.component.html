@@ -1,0 +1,27 @@
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+
+    </div>
+</div>
+
+<div id="jitsi-iframe"></div>
+<div *ngIf="!cargando">
+
+
+    <!--For Custom Controls-->
+    <div class="item-center">
+        <span>Custom Controls</span>
+    </div>
+    <div class="item-center">
+        <i (click)="executeCommand('toggleAudio')" class="fas fa-2x grey-color" [ngClass]="isAudioMuted ? 'fa-microphone-slash' : 'fa-microphone'" aria-hidden="true" title="Mute / Unmute"></i>
+        <i (click)="executeCommand('hangup')" class="fas fa-phone-slash fa-2x red-color" aria-hidden="true" title="Leave"></i>
+        <i (click)="executeCommand('toggleVideo')" class="fas fa-2x grey-color" [ngClass]="isVideoMuted ? 'fa-video-slash' : 'fa-video'" aria-hidden="true" title="Start / Stop camera"></i>
+        <i (click)="executeCommand('toggleShareScreen')" class="fas fa-film fa-2x grey-color" aria-hidden="true" title="Share your screen"></i>
+    </div>
+</div>

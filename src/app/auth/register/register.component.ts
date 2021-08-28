@@ -4,7 +4,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2'
 
 import { UsuarioService } from '../../services/usuario.service';
-import { EstudioService } from '../../services/estudio.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +26,6 @@ export class RegisterComponent {
 
   constructor( private fb: FormBuilder,
                private usuarioService: UsuarioService,
-               private estudioService: EstudioService,
                private router: Router ) { }
 
   crearUsuario() {
@@ -43,11 +41,9 @@ export class RegisterComponent {
         .subscribe( resp => {
 
           const { nombre } = this.registerForm.value;
-          this.estudioService.crearEstudio( this.registerForm.value )
-          .subscribe( (resp: any) => {
             Swal.fire('Creado', `${ nombre } creado correctamente`, 'success');
             // this.router.navigateByUrl(`/dashboard/estudio/${ resp.estudio._id }`)
-        })
+
 
           // Navegar al Dashboard
           this.router.navigateByUrl('/');

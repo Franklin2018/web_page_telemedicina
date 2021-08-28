@@ -4,7 +4,6 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import Swal from 'sweetalert2'
 
 import { UsuarioService } from '../../services/usuario.service';
-import { EstudioService } from '../../services/estudio.service';
 import { MedicoService } from '../../services/medico.service';
 import { FileUploadService } from '../../services/file-upload.service';
 import { Medico } from 'src/app/models/medico.model';
@@ -44,7 +43,7 @@ export class RegisterMedicoComponent {
 
 
   public registerFormUsuario = this.fb.group({
-    nombre: ['', Validators.required ],
+    // nombre: ['', Validators.required ],
     email: ['', [ Validators.required, Validators.email ] ],
     role: ['MEDICO_ROLE', Validators.required ],
     password: ['', Validators.required ],
@@ -115,7 +114,6 @@ onRemove(event) {
     this.formSubmitted = cpt;
 
     if ( this.registerFormUsuario.invalid || this.registerFormPersona.invalid || this.registerFormMedico.invalid || !(this.files.length>0)){
-      console.log('no entro');
       return;
     }
     const mergedObject = {
@@ -126,7 +124,7 @@ onRemove(event) {
     // Realizar el posteo
     this.usuarioService.crearUsuario( mergedObject )
         .subscribe( resp => {
-          const { nombre } = this.registerFormUsuario.value;
+          const { nombre } = resp.persona;//this.registerFormUsuario.value;
           const persona = resp.persona._id;
           this.registerFormMedico.patchValue({persona:persona});
 

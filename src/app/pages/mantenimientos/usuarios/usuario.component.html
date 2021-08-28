@@ -1,4 +1,4 @@
-<!-- <div class="row animated fadeIn fast" *ngIf="cargando">
+<div class="row animated fadeIn fast" *ngIf="cargando">
     <div class="col-12">
 
         <div class="alert alert-info text-center">
@@ -8,7 +8,7 @@
         </div>
 
     </div>
-</div> -->
+</div>
 <div class="row animated fadeIn fast" *ngIf="!cargando">
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
@@ -16,7 +16,7 @@
                 <div class="m-t-30 text-align-center">
                     <img [src]="usuario.img | imagen:'usuarios'" class="img-circle" width="150">
                     <h4 class="card-title m-t-10">{{persona.nombre}}{{persona.apellido}}</h4>
-                    <h6 class="card-subtitle">medico.especialidad</h6>
+                    <h6 class="card-subtitle">{{medico.especialidad}}</h6>
                     <div class="row text-center justify-content-md-center">
                         <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-star " ></i> <font class="font-medium">{{medico.calificacion}}</font></a></div>
                         <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-check-square" style="color: green;" ></i> <font class="font-medium">vericado</font></a></div>

@@ -13,7 +13,7 @@ export class Medico {
       public descripcion?: string,
       public cv?: string,
       public credencialMedico?: string,
-      public especilidad?: string,
+      public especialidad?: string,
       public persona?: Persona,
   ) {}
 

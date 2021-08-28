@@ -15,6 +15,8 @@ import { Usuario } from '../models/usuario.model';
 import { query } from '@angular/animations';
 import { Persona } from '../models/persona.model';
 import { Medico } from '../models/medico.model';
+import { NotificationService } from './notificacion-services/notification.service';
+import { HandleNotificationService } from './handle-notification.service';
 
 const base_url = environment.base_url;
 
@@ -28,10 +30,13 @@ export class UsuarioService {
   // public auth2: any;
   public usuario: Usuario;
 
-  constructor( private http: HttpClient,
-                private router: Router,
-                private ngZone: NgZone ) {
-
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private ngZone: NgZone,
+    private notificationService: NotificationService,
+    // private handleNotificationService: HandleNotificationService
+  ) {
     // this.googleInit();
   }
 
@@ -39,7 +44,7 @@ export class UsuarioService {
     return localStorage.getItem('token') || '';
   }
 
-  get role(): 'ADMIN_ROLE' | 'USER_ROLE'{
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' | 'MEDICO_ROLE' | 'PACIENTE_ROLE'{
     return this.usuario.role;
   }
 
@@ -78,11 +83,14 @@ export class UsuarioService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('menu');
-    this.ngZone.run(() => {
-      this.router.navigateByUrl('/login');
-    })
+    this.notificationService.borrarTokenFCM().subscribe(data=>{
+      localStorage.removeItem('token');
+      localStorage.removeItem('menu');
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/login');
+      })
+    });
+
 
     // this.auth2.signOut().then(() => {
 
@@ -103,6 +111,9 @@ export class UsuarioService {
         const { email, google, nombre, role, img = '', uid } = resp.usuario;
         this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
 
+
+//  console.log('renenw token');
+//         this.handleNotificationService.ngOnInit();
         this.guardarLocalStorage( resp.token, resp.menu );
 
         return true;
@@ -124,7 +135,6 @@ export class UsuarioService {
                 //   // this.guardarLocalStorage( resp.token, resp.menu );
                 // })
               )
-
   }
 
   actualizarPerfil( data: { email: string, nombre: string, role: string } ) {
@@ -143,7 +153,10 @@ export class UsuarioService {
     return this.http.post(`${ base_url }/login`, formData )
                 .pipe(
                   tap( (resp: any) => {
+                    // this.handleNotificationService.ngOnInit();
+
                     this.guardarLocalStorage( resp.token, resp.menu );
+
                   })
                 );
 

@@ -4,10 +4,22 @@
 
 export const environment = {
   production: true,
-  base_url: 'http://localhost:3000/api',
-  // base_url: 'https://webservicetopico2020.herokuapp.com/api',
+  base_url: 'http://192.168.43.187:3000/api',
+  host_url: 'http://192.168.43.187:3000',
+  // base_url: 'https://telemedicina-topicos.herokuapp.com/api',
+  // host_url: 'https://telemedicina-topicos.herokuapp.com',
 
-  s3_url:'https://eventosbucket.s3.amazonaws.com'
+  s3_url:'https://eventosbucket.s3.amazonaws.com',
+
+  firebaseConfig : {
+    apiKey: "AIzaSyCd4lZjWAeRDkToMpGZBKFiXrjbZEPF3OI",
+    authDomain: "topicos-telemedicina.firebaseapp.com",
+    projectId: "topicos-telemedicina",
+    storageBucket: "topicos-telemedicina.appspot.com",
+    messagingSenderId: "439041510953",
+    appId: "1:439041510953:web:980a811698fc23b204d638",
+    measurementId: "G-M3QLRZQVVB"
+},
 };
 
 /*

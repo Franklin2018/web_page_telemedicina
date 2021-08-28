@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnDestroy } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
 import { Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
+import { NotificationService } from '../../services/notificacion-services/notification.service';
+import { HandleNotificationService } from '../../services/handle-notification.service';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +16,36 @@ export class HeaderComponent {
 
   public usuario: Usuario;
 
-  constructor( private usuarioService: UsuarioService,
+
+  public notificacion: boolean  = false;
+
+  constructor(
+    private usuarioService: UsuarioService,
+     private handleNotificationService: HandleNotificationService,
+
+    private notificationService: NotificationService,
+
                private router: Router ) {
     this.usuario = usuarioService.usuario;
   }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+  }
+
+  ngOnInit(): void {
+    this.handleNotificationService.ngOnInit();
+
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+
+    this.notificationService.messageEmitter.pipe(delay(100))
+  .subscribe( payload => {
+    this.notificacion = true;
+  } );
+  }
+
 
   logout() {
     this.usuarioService.logout();
@@ -30,5 +59,12 @@ export class HeaderComponent {
 
     this.router.navigateByUrl(`/dashboard/buscar/${ termino }`);
   }
+
+  desactivar(){
+    this.notificacion = false;
+    this.router.navigateByUrl(`/dashboard/fichamedicas`);
+
+  }
+
 
 }

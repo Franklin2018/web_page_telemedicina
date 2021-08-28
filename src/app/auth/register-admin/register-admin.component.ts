@@ -41,7 +41,7 @@ ngOnInit(): void {
     {value: 'USER_ROLE'},
   ];
   public registerFormUsuario = this.fb.group({
-    nombre: ['', Validators.required ],
+    // nombre: ['', Validators.required ],
     email: ['', [ Validators.required, Validators.email ] ],
     role: ['ADMIN_ROLE', Validators.required ],
     password: ['', Validators.required ],
@@ -98,7 +98,7 @@ onRemove(event) {
     // Realizar el posteo
     this.usuarioService.crearUsuario( mergedObject )
         .subscribe( resp => {
-          const { nombre } = this.registerFormUsuario.value;
+          const { nombre } = resp.persona;//this.registerFormUsuario.value;
 
             Swal.fire('Creado', `${ nombre } creado correctamente`, 'success');
 

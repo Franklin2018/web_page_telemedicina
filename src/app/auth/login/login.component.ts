@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
+import { HandleNotificationService } from '../../services/handle-notification.service';
 
 declare const gapi:any;
 
@@ -27,9 +28,13 @@ export class LoginComponent implements OnInit {
   constructor( private router: Router,
                private fb: FormBuilder,
                private usuarioService: UsuarioService,
-               private ngZone: NgZone ) { }
+               private ngZone: NgZone,
+               ) {
+
+                }
 
   ngOnInit(): void {
+
     // this.renderButton();
   }
 
@@ -46,6 +51,7 @@ export class LoginComponent implements OnInit {
         }
 
         // Navegar al Dashboard
+
         this.router.navigateByUrl('/');
 
       }, (err) => {

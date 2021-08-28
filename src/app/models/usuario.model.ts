@@ -11,7 +11,7 @@ export class Usuario {
         public password?: string,
         public img?: string,
         public google?: boolean,
-        public role?: 'ADMIN_ROLE' | 'USER_ROLE',
+        public role?: 'ADMIN_ROLE' | 'USER_ROLE' | 'MEDICO_ROLE'|'PACIENTE_ROLE',
         public uid?: string,
         public createdAt?: string,
         public estado?: string

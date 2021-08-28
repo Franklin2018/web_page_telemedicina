@@ -1,0 +1,156 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Buscar usuario..." (keyup)="buscar( txtTermino.value )" #txtTermino/>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">Mostrando {{desde + 1}} hasta {{desde + fichaMedicas.length}} de {{ totalFichaMedicas }} ficha medicas</h4>
+                        <h6 class="card-subtitle">Ficha Medicas registradas</h6>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-end py-3">
+                    <div class=" mx-3 ">
+                        Entradas
+                        <select class="form-control w100" [(ngModel)]="entrada" (change)=" cargarFichaMedicas() ">
+                          <option [ngValue]=5>5</option>
+                          <option [ngValue]=10>10</option>
+                          <option [ngValue]=25>25</option>
+                          <option [ngValue]=50>50</option>
+                        </select>
+                    </div>
+
+                    <div class="mx-3">
+                        Estado
+                        <select class="form-control w100" [(ngModel)]="estado" (change)=" cargarFichaMedicas() ">
+                          <option value="todos">Todos</option>
+
+                          <option value="atendido">Atendido</option>
+                          <option value="rechazado">Rechazado</option>
+                          <option value="aceptado">Aceptado</option>
+                          <option value="pendiente">Pendiente</option>
+                        </select>
+
+                    </div>
+                    <div class="">
+                        Orden
+                        <select class="form-control w100" [(ngModel)]="sort" (change)=" cargarFichaMedicas() ">
+                          <option [ngValue]=-1>Nuevos</option>
+                          <option [ngValue]=1>Antiguos</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="table-responsive">
+
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w100"># ficha</th>
+                                <th>Paciente</th>
+                                <th>Celular</th>
+                                <th class="w120">Fecha</th>
+                                <th class="w120">Inicio</th>
+                                <th class="w120">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let fichaMedica of fichaMedicas; index as idx">
+                                <td>{{desde + idx + 1}} {{fichaMedica.nroFicha}}</td>
+                                <td>
+                                    <a [routerLink]="['/dashboard','usuario', fichaMedica.paciente.usuario._id]">
+                                    {{fichaMedica.paciente.nombre}} {{fichaMedica.paciente.apellido}}
+                                  </a>
+                                </td>
+                                <td>{{ fichaMedica.paciente.celular }}</td>
+                                <td>
+                                    <span *ngIf="fichaMedica.fecha" class="label label-info"> {{fichaMedica.fecha  | date: 'EEEE  dd - MM - yy' }}</span>
+                                    <span *ngIf="!fichaMedica.fecha" class="label label-danger"> sin fecha</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="fichaMedica.horaInicio" class="label label-info"> {{fichaMedica.horaInicio  | date: 'HH : mm'}}</span>
+                                    <span *ngIf="!fichaMedica.horaInicio" class="label label-danger"> Sin hora</span>
+                                </td>
+
+                                <td>
+                                    <select *ngIf="fichaMedica.estado == 'rechazado'" value=fichaMedica.estado class="form-control btn btn-secondary" [(ngModel)]="fichaMedica.estado" (change)="cambiarEstado( fichaMedica )">
+                                      <option value="atendido">Atendido</option>
+                                      <option value="rechazado">Rechazado</option>
+                                      <option value="pendiente">Pendiente</option>
+                                      <option value="aceptado">Aceptado</option>
+                                </select>
+                                    <select *ngIf="fichaMedica.estado == 'aceptado'" class="form-control btn btn-success text-white" [(ngModel)]="fichaMedica.estado" (change)="cambiarEstado( fichaMedica )">
+                                      <option value="atendido">Atendido</option>
+                                      <option value="rechazado">Rechazado</option>
+                                      <option value="pendiente">Pendiente</option>
+                                      <option value="aceptado">Aceptado</option>
+
+                                </select>
+                                    <select *ngIf="fichaMedica.estado == 'pendiente'" class="form-control btn btn-warning text-white" [(ngModel)]="fichaMedica.estado" (change)="cambiarEstado( fichaMedica )">
+                                      <option value="atendido">Atendido</option>
+                                      <option value="rechazado">Rechazado</option>
+                                      <option value="pendiente">Pendiente</option>
+                                      <option value="aceptado">Aceptado</option>
+                                </select>
+                                    <select *ngIf="fichaMedica.estado == 'atendido'" class="form-control btn btn-danger text-white" [(ngModel)]="fichaMedica.estado" (change)="cambiarEstado( fichaMedica )">
+                                      <option value="atendido">Atendido</option>
+                                      <option value="rechazado">Rechazado</option>
+                                      <option value="pendiente">Pendiente</option>
+                                      <option value="aceptado">Aceptado</option>
+                                </select>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row" *ngIf="txtTermino.value.length === 0">
+                    <div class="col-8">
+                        <button (click)="cambiarPagina(-entrada)" class="btn btn-secondary">Anteriores</button> &nbsp;
+                        <button (click)="cambiarPagina(entrada)" class="btn btn-secondary">Siguientes</button>
+                    </div>
+                    <div class="col">
+                        <div class="text-right">
+                            Mostrar
+                            <select class="form-control w100" [(ngModel)]="entrada" (change)=" cargarFichaMedicas() ">
+                            <option [ngValue]=5>5</option>
+                            <option [ngValue]=10>10</option>
+                            <option [ngValue]=25>25</option>
+                            <option [ngValue]=50>50</option>
+                          </select> entradas
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
       can be found in the LICENSE file at http://angular.io/license -->
 
 <section id="wrapper">
-    <div class="login-register " style=" overflow: auto; background-image:url(../assets/images/background/login-register.jpg);">
+    <div class="login-register " style=" overflow: auto; background-image:url(../assets/images/background/login-register.png);">
         <div class="fixed-position login-box card">
             <div class="card-body">
                 <h3 class="box-title m-b-20">Registrate </h3> <small>Crea tu cuenta y unete</small>
@@ -12,10 +12,7 @@
                         <ng-template matStepLabel>Perfil de usuario</ng-template>
                         <form id="loginform" autocomplete="off" [formGroup]="registerFormUsuario" class="form-horizontal form-material">
                             <div class="row">
-                                <mat-form-field class="col-md-6">
-                                    <mat-label>Nombres</mat-label>
-                                    <input matInput placeholder="Nombre (s)" formControlName="nombre" required>
-                                </mat-form-field>
+
                                 <mat-form-field class="col-md-6">
                                     <mat-label>Email</mat-label>
                                     <input matInput placeholder="" formControlName="email" required>
@@ -38,7 +35,7 @@
                             <div class="row ">
                                 <div class="col text-danger ">
 
-                                    <p *ngIf="campoNoValido( registerFormUsuario,'nombre') ">* El nombre es obligatorio</p>
+                                    <!-- <p *ngIf="campoNoValido( registerFormUsuario,'nombre') ">* El nombre es obligatorio</p> -->
                                     <p *ngIf="campoNoValido( registerFormUsuario,'email') ">* El email es obligatorio y tiene que ser válido</p>
                                     <p *ngIf="contrasenasNoValidas() ">* Las contraseñas deben de ser iguales</p>
 
@@ -117,15 +114,7 @@
                                     <mat-label>Titulo</mat-label>
                                     <input matInput placeholder="Titulo" formControlName="titulo" required>
                                 </mat-form-field>
-                                <!-- <mat-form-field class="col-md-6">
-                                    <input type="text" placeholder="especialidad" aria-label="Text" matInput [formControl]="registerFormMedico.get('especialidad')" [matAutocomplete]="auto">
-                                    <mat-autocomplete #auto="matAutocomplete">
-                                        <mat-option *ngFor="let especialidad of especialidades " [value]="especialidad.nombre">
-                                            {{especialidad.nombre}}
-                                        </mat-option>
-                                    </mat-autocomplete>
 
-                                </mat-form-field> -->
                                 <mat-form-field class="col-md-6">
                                     <mat-label>Especialidad </mat-label>
                                     <input type="text" placeholder="especialidad" formControlName="especialidad" required aria-label="Text" matInput [formControl]="registerFormMedico.get('especialidad')" [matAutocomplete]="auto">
